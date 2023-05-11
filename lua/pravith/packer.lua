@@ -116,5 +116,7 @@ return require('packer').startup(function(use)
             })
         end
     }
+
+    use "lukas-reineke/indent-blankline.nvim"
     --use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
 end)
