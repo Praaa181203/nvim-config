@@ -58,4 +58,4 @@ vim.keymap.set("n", "<leader><leader>", function()
 end)
 
 -- Select all from any mode
-vim.keymap.set({"n", "v", "i"}, "<C-d>", "<C-c>ggVG")
+vim.keymap.set({ "n", "v", "i" }, "<C-g>", "<C-c>ggVG")
