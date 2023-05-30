@@ -123,6 +123,15 @@ return require('packer').startup(function(use)
             })
         end
     }
+    use {
+        'nvim-tree/nvim-tree.lua',
+        requires = {
+            'nvim-tree/nvim-web-devicons', -- optional
+        },
+        config = function()
+            require("nvim-tree").setup {}
+        end
+    }
 
     use "lukas-reineke/indent-blankline.nvim"
     --use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
