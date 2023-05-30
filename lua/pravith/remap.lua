@@ -61,4 +61,4 @@ end)
 vim.keymap.set({ "n", "v", "i" }, "<C-g>", "<C-c>ggVG")
 
 -- Neovim Tree toggle
-vim.keymap.set({ "n", "v" }, "<C-b>", "<cmd>NvimTreeToggle<CR>")
+vim.keymap.set({ "n", "v" }, "<C-b>", "<cmd>NvimTreeFindFileToggle<CR>")
