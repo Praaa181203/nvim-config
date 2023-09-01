@@ -110,8 +110,22 @@ vim.keymap.set("n", "zz", function()
                 brackets[triangle] = brackets[triangle] - 1
             end
         end
-        if brackets[curly] ~= 0 or brackets[round] ~= 0 or brackets[square] ~= 0 or brackets[triangle] ~= 0 then
-            vim.api.nvim_feedkeys("zf%", "n", true)
+        if brackets[curly] ~= 0 then
+            -- `nvim_feedkeys` does not wait for commands to complete, so I added a delay manually
+            vim.defer_fn(function() vim.api.nvim_feedkeys("$F{", "n", true) end, 0)
+            vim.defer_fn(function() vim.api.nvim_feedkeys("zf%", "n", true) end, 10)
+        elseif brackets[round] ~= 0 then
+            -- `nvim_feedkeys` does not wait for commands to complete, so I added a delay manually
+            vim.defer_fn(function() vim.api.nvim_feedkeys("$F(", "n", true) end, 0)
+            vim.defer_fn(function() vim.api.nvim_feedkeys("zf%", "n", true) end, 10)
+        elseif brackets[square] ~= 0 then
+            -- `nvim_feedkeys` does not wait for commands to complete, so I added a delay manually
+            vim.defer_fn(function() vim.api.nvim_feedkeys("$F[", "n", true) end, 0)
+            vim.defer_fn(function() vim.api.nvim_feedkeys("zf%", "n", true) end, 10)
+        elseif brackets[triangle] ~= 0 then
+            -- `nvim_feedkeys` does not wait for commands to complete, so I added a delay manually
+            vim.defer_fn(function() vim.api.nvim_feedkeys("$F<", "n", true) end, 0)
+            vim.defer_fn(function() vim.api.nvim_feedkeys("zf%", "n", true) end, 10)
         else
             local prompt = vim.fn.input("Do you want to colapse this whole paragraph? [y/N]")
             local yes_options = {
