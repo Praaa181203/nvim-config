@@ -34,10 +34,6 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 
 vim.keymap.set("n", "Q", "<nop>")
 
--- TBF
-
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-
 -- Formats code using lsp lel
 
 vim.keymap.set("n", "<leader>ff", vim.lsp.buf.format)
@@ -47,7 +43,9 @@ vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
+-- Search and relplace in the whole file for the current word
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+-- Make current file an executable
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/pravith/packer.lua<CR>");
@@ -65,4 +63,65 @@ vim.keymap.set({ "n", "v" }, "<C-f>", "<cmd>NvimTreeFindFileToggle<CR>")
 
 vim.keymap.set("n", "<leader>n", function()
     vim.diagnostic.open_float({ focus = true, focusable = true })
+end)
+
+-- Fold if not folded, unfold if folded
+
+vim.keymap.set("n", "zz", function()
+    local current_line_number, col = unpack(vim.api.nvim_win_get_cursor(0))
+    local is_line_folded = vim.fn.foldclosed(current_line_number)
+    if is_line_folded > 0 then
+        vim.api.nvim_feedkeys("zd", "n", true)
+    else
+        local current_line = vim.api.nvim_get_current_line()
+        local curly = "{}"
+        local round = "()"
+        local square = "[]"
+        local triangle = "<>"
+        local brackets = {}
+        brackets[curly] = 0
+        brackets[round] = 0
+        brackets[square] = 0
+        brackets[triangle] = 0
+        for i = 1, #current_line do
+            local c = current_line:sub(i, i)
+            if c == "{" then
+                brackets[curly] = brackets[curly] + 1
+            end
+            if c == "}" then
+                brackets[curly] = brackets[curly] - 1
+            end
+            if c == "(" then
+                brackets[round] = brackets[round] + 1
+            end
+            if c == ")" then
+                brackets[round] = brackets[round] - 1
+            end
+            if c == "[" then
+                brackets[square] = brackets[square] + 1
+            end
+            if c == "]" then
+                brackets[square] = brackets[square] - 1
+            end
+            if c == "<" then
+                brackets[triangle] = brackets[triangle] + 1
+            end
+            if c == ">" then
+                brackets[triangle] = brackets[triangle] - 1
+            end
+        end
+        if brackets[curly] ~= 0 or brackets[round] ~= 0 or brackets[square] ~= 0 or brackets[triangle] ~= 0 then
+            vim.api.nvim_feedkeys("zf%", "n", true)
+        else
+            local prompt = vim.fn.input("Do you want to colapse this whole paragraph? [y/N]")
+            local yes_options = {
+                ["y"] = true,
+                ["Y"] = true,
+            }
+            if yes_options[prompt] then
+                vim.api.nvim_feedkeys("vapkzf", "n", true)
+            end
+            vim.cmd("echo ''")
+        end
+    end
 end)
