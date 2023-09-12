@@ -1,26 +1,27 @@
 vim.g.mapleader = " "
--- Open explorer
+
+-- Open explorer.
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
--- Move lines in visual mode
+-- Move lines in visual mode.
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
--- Join the bottom line and this line, i.e puts the bottom line to the end of the current line
+-- Join the bottom line and this line, i.e puts the bottom line to the end of the current line.
 vim.keymap.set("n", "J", "mzJ`z")
 
--- To move up and down, but it puts the cursor in the middle
+-- To move up and down, but it puts the cursor in the middle.
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
--- To move between code blocks like functions, etc
+-- To move between code blocks like functions, etc.
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
--- Paste from clipboard
+-- Paste from clipboard.
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
--- Copy to clipboard
+-- Copy to clipboard.
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
@@ -34,7 +35,7 @@ vim.keymap.set("i", "<C-c>", "<Esc>")
 
 vim.keymap.set("n", "Q", "<nop>")
 
--- Formats code using lsp lel
+-- Formats code using lsp lel.
 
 vim.keymap.set("n", "<leader>ff", vim.lsp.buf.format)
 
@@ -43,9 +44,9 @@ vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
 vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
 
--- Search and relplace in the whole file for the current word
+-- Search and relplace in the whole file for the current word.
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
--- Make current file an executable
+-- Make current file an executable.
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/pravith/packer.lua<CR>");
@@ -55,18 +56,25 @@ vim.keymap.set("n", "<leader><leader>", function()
     vim.cmd("so")
 end)
 
--- Select all from any mode
+-- Select all from any mode.
 vim.keymap.set({ "n", "v", "i" }, "<C-g>", "<C-c>ggVG")
 
--- Neovim Tree toggle
+-- Neovim Tree toggle.
 vim.keymap.set({ "n", "v" }, "<C-f>", "<cmd>NvimTreeFindFileToggle<CR>")
 
+-- Open the error in a new model.
 vim.keymap.set("n", "<leader>n", function()
     vim.diagnostic.open_float({ focus = true, focusable = true })
 end)
 
--- Fold if not folded, unfold if folded
+-- Move left and right while in insert mode.
+vim.keymap.set("i", "<C-b>", "<Left>")
+vim.keymap.set("i", "<C-f>", "<Right>")
 
+-- Remove a charecter behind the cursor.
+vim.keymap.set("i", "<C-h>", "<BS>")
+
+-- Fold if not folded, unfold if folded
 vim.keymap.set("n", "zz", function()
     local current_line_number, col = unpack(vim.api.nvim_win_get_cursor(0))
     local is_line_folded = vim.fn.foldclosed(current_line_number)
