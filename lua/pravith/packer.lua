@@ -7,8 +7,10 @@ return require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
+    -- Game which can help in getting good with nvim
     use 'ThePrimeagen/vim-be-good'
 
+    -- Telescope, duh
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.0',
         -- or                            , branch = '0.1.x',
@@ -22,6 +24,7 @@ return require('packer').startup(function(use)
 
     }
 
+    -- Rose Pine theme, duh
     use({
         'rose-pine/neovim',
         as = 'rose-pine',
@@ -30,6 +33,7 @@ return require('packer').startup(function(use)
         end
     })
 
+    -- Neovim diagnostics, the error and warnings
     use({
         "folke/trouble.nvim",
         config = function()
@@ -43,14 +47,22 @@ return require('packer').startup(function(use)
     })
 
 
+    -- Treesitter, duh, it adds color lol
     use({ "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" })
+    -- View treesitter information directly in Neovim
     use("nvim-treesitter/playground")
+    -- Harpoon, duh, its the Ctrl-e thingy
     use("theprimeagen/harpoon")
+    -- The refactoring library
     use("theprimeagen/refactoring.nvim")
+    -- Undotree duh
     use("mbbill/undotree")
+    -- Fugitive duh
     use("tpope/vim-fugitive")
+    -- Lightweight alternative to context.vim
     use("nvim-treesitter/nvim-treesitter-context");
 
+    -- Lsp, duh
     use {
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v1.x',
@@ -75,11 +87,13 @@ return require('packer').startup(function(use)
     }
 
     use("folke/zen-mode.nvim")
+    -- Markdown preview
     use({
         "iamcco/markdown-preview.nvim",
         run = function() vim.fn["mkdp#util#install"]() end,
     })
 
+    -- Rest Nvim
     use {
         "rest-nvim/rest.nvim",
         requires = { "nvim-lua/plenary.nvim" },
@@ -120,6 +134,7 @@ return require('packer').startup(function(use)
             })
         end
     }
+    -- The file tree
     use {
         'nvim-tree/nvim-tree.lua',
         requires = {
@@ -136,5 +151,6 @@ return require('packer').startup(function(use)
         end
     }
 
+    -- The indent line coloring
     use "lukas-reineke/indent-blankline.nvim"
 end)
