@@ -75,7 +75,6 @@ return require('packer').startup(function(use)
     }
 
     use("folke/zen-mode.nvim")
-    use("eandrju/cellular-automaton.nvim")
     use({
         "iamcco/markdown-preview.nvim",
         run = function() vim.fn["mkdp#util#install"]() end,
@@ -138,5 +137,4 @@ return require('packer').startup(function(use)
     }
 
     use "lukas-reineke/indent-blankline.nvim"
-    --use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
 end)
