@@ -87,52 +87,81 @@ vim.keymap.set("n", "zz", function()
         local square = "[]"
         local triangle = "<>"
         local brackets = {}
+        local is_start_last = {}
         brackets[curly] = 0
         brackets[round] = 0
         brackets[square] = 0
         brackets[triangle] = 0
+        is_start_last[curly] = nil
+        is_start_last[round] = nil
+        is_start_last[square] = nil
+        is_start_last[triangle] = nil
         for i = 1, #current_line do
             local c = current_line:sub(i, i)
             if c == "{" then
                 brackets[curly] = brackets[curly] + 1
+                is_start_last[curly] = true
             end
             if c == "}" then
                 brackets[curly] = brackets[curly] - 1
+                is_start_last[curly] = false
             end
             if c == "(" then
                 brackets[round] = brackets[round] + 1
+                is_start_last[round] = true
             end
             if c == ")" then
                 brackets[round] = brackets[round] - 1
+                is_start_last[round] = false
             end
             if c == "[" then
                 brackets[square] = brackets[square] + 1
+                is_start_last[square] = true
             end
             if c == "]" then
                 brackets[square] = brackets[square] - 1
+                is_start_last[square] = false
             end
             if c == "<" then
                 brackets[triangle] = brackets[triangle] + 1
+                is_start_last[triangle] = true
             end
             if c == ">" then
                 brackets[triangle] = brackets[triangle] - 1
+                is_start_last[triangle] = false
             end
         end
         if brackets[curly] ~= 0 then
             -- `nvim_feedkeys` does not wait for commands to complete, so I added a delay manually
-            vim.defer_fn(function() vim.api.nvim_feedkeys("$F{", "n", true) end, 0)
+            if is_start_last[curly] then
+                vim.defer_fn(function() vim.api.nvim_feedkeys("$F{", "n", true) end, 0)
+            else
+                vim.defer_fn(function() vim.api.nvim_feedkeys("$F}", "n", true) end, 0)
+            end
             vim.defer_fn(function() vim.api.nvim_feedkeys("zf%", "n", true) end, 10)
         elseif brackets[round] ~= 0 then
             -- `nvim_feedkeys` does not wait for commands to complete, so I added a delay manually
-            vim.defer_fn(function() vim.api.nvim_feedkeys("$F(", "n", true) end, 0)
+            if is_start_last[round] then
+                vim.defer_fn(function() vim.api.nvim_feedkeys("$F(", "n", true) end, 0)
+            else
+                vim.defer_fn(function() vim.api.nvim_feedkeys("$F)", "n", true) end, 0)
+            end
             vim.defer_fn(function() vim.api.nvim_feedkeys("zf%", "n", true) end, 10)
         elseif brackets[square] ~= 0 then
             -- `nvim_feedkeys` does not wait for commands to complete, so I added a delay manually
-            vim.defer_fn(function() vim.api.nvim_feedkeys("$F[", "n", true) end, 0)
+            if is_start_last[square] then
+                vim.defer_fn(function() vim.api.nvim_feedkeys("$F[", "n", true) end, 0)
+            else
+                vim.defer_fn(function() vim.api.nvim_feedkeys("$F]", "n", true) end, 0)
+            end
             vim.defer_fn(function() vim.api.nvim_feedkeys("zf%", "n", true) end, 10)
         elseif brackets[triangle] ~= 0 then
             -- `nvim_feedkeys` does not wait for commands to complete, so I added a delay manually
-            vim.defer_fn(function() vim.api.nvim_feedkeys("$F<", "n", true) end, 0)
+            if is_start_last[triangle] then
+                vim.defer_fn(function() vim.api.nvim_feedkeys("$F<", "n", true) end, 0)
+            else
+                vim.defer_fn(function() vim.api.nvim_feedkeys("$F>", "n", true) end, 0)
+            end
             vim.defer_fn(function() vim.api.nvim_feedkeys("zf%", "n", true) end, 10)
         else
             local prompt = vim.fn.input("Do you want to colapse this whole paragraph? [y/N]")
