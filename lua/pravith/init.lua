@@ -1,15 +1,13 @@
 require("pravith.set")
 require("pravith.remap")
 
--- DO NOT INCLUDE THIS
-vim.opt.rtp:append("~/personal/streamer-tools")
--- DO NOT INCLUDE THIS
-
 local augroup = vim.api.nvim_create_augroup
-local ThePrimeagenGroup = augroup('ThePrimeagen', {})
+local Pravith = augroup('Pravith', {})
 
 local autocmd = vim.api.nvim_create_autocmd
 local yank_group = augroup('HighlightYank', {})
+
+vim.cmd([[autocmd FileType c setlocal tabstop=2 shiftwidth=2]])
 
 function R(name)
     require("plenary.reload").reload_module(name)
@@ -27,7 +25,7 @@ autocmd('TextYankPost', {
 })
 
 autocmd({"BufWritePre"}, {
-    group = ThePrimeagenGroup,
+    group = Pravith,
     pattern = "*",
     command = [[%s/\s\+$//e]],
 })
