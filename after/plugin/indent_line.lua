@@ -1,19 +1,9 @@
 vim.cmd [[highlight IndentBlanklineContextChar guifg=#eb6f92 gui=nocombine]]
 
-local ibl = require("ibl")
-
-ibl.setup {
-    debounce = 0,
-    whitespace = {
-        highlight = { "Whitespace", "NonText" }
+require("indent_blankline").setup {
+    space_char_blankline = " ",
+    indent_blankline_context_highlight_list = {
+        "IndentBlanklineCurrentContextSpaceChar",
     },
-    scope = {
-        --exclude = { language = { "html" } },
-
-        show_start = false,
-
-        show_end = false,
-
-        highlight = { "Function", "Label" },
-    },
+    show_current_context = true,
 }

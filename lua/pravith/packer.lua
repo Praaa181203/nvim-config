@@ -152,5 +152,5 @@ return require('packer').startup(function(use)
     }
 
     -- The indent line coloring
-    use "lukas-reineke/indent-blankline.nvim"
+    use { "lukas-reineke/indent-blankline.nvim", tag = "v2.20.8" }
 end)
