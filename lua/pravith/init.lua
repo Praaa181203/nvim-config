@@ -8,6 +8,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local yank_group = augroup('HighlightYank', {})
 
 vim.cmd([[autocmd FileType c setlocal tabstop=2 shiftwidth=2]])
+vim.cmd([[autocmd FileType json setlocal tabstop=2 shiftwidth=2]])
 
 function R(name)
     require("plenary.reload").reload_module(name)
