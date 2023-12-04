@@ -59,7 +59,7 @@ return require('packer').startup(function(use)
     use("mbbill/undotree")
     -- Fugitive duh
     use("tpope/vim-fugitive")
-    -- Lightweight alternative to context.vim
+    -- The function sticking up in the top thingy.
     use("nvim-treesitter/nvim-treesitter-context");
 
     -- Lsp, duh
