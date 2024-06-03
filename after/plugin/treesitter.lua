@@ -23,4 +23,5 @@ require 'nvim-treesitter.configs'.setup {
 
 require 'treesitter-context'.setup {
     multiline_threshold = 1,
+    max_lines = 5,
 }
