@@ -74,6 +74,13 @@ vim.keymap.set("i", "<C-f>", "<Right>")
 -- Remove a charecter behind the cursor.
 vim.keymap.set("i", "<C-h>", "<BS>")
 
+-- Command mode remap start of the line
+vim.keymap.set("c", "<C-a>", "<Home>")
+-- Command mode remap right
+vim.keymap.set("c", "<C-f>", "<Right>")
+-- Command mode remap left
+vim.keymap.set("c", "<C-b>", "<Left>")
+
 -- Fold if not folded, unfold if folded
 vim.keymap.set("n", "zz", function()
     local current_line_number, col = unpack(vim.api.nvim_win_get_cursor(0))
